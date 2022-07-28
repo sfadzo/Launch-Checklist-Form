@@ -1,6 +1,22 @@
 // Write your JavaScript code here!
 window.addEventListener("load",function(){
-
+   fetch("https://handlers.education.launchcode.org/static/planets.json").then(function(response){
+      response.json().then(function(json){
+ 
+       let launchCheckListForm = document.getElementById("missionTarget");
+       let index = Math.floor(Math.random() * json.length);     
+       launchCheckListForm.innerHTML = `<h2>Mission Destination</h2>
+       <ul>
+       <li>Name: ${json[index].name}</li>
+       <li>Diameter: ${json[index].diameter}</li>
+       <li>Star: ${json[index].star}</li>
+       <li>Distance from Earth: ${json[index].distance}</li>
+       <li>Number of Moons: ${json[index].moons}</li>
+       </ul>
+       <img src="${json[index].image}">`;
+      });
+   });   
+   
    let itemStatusReveal = document.getElementById("itemStatus");
    let launchStatusEval = document.getElementById("launchStatus");
    //itemStatusReveal.style.visibility = "hidden";
@@ -13,8 +29,8 @@ window.addEventListener("load",function(){
 
 
    theForm.addEventListener("submit", function(event){
-      event.preventDefault();
-
+      event.preventDefault();      
+       
        let pilotNameInput = document.querySelector("input[name=pilotName]");
        let pilotName = pilotNameInput.value; 
        let pilotNameCheck = Number(pilotName); //should be NaN
@@ -61,15 +77,10 @@ window.addEventListener("load",function(){
             launchStatusEval.innerHTML = `Shuttle is ready for launch!`;
             fuelStatus.innerHTML = `Fuel Level: ${fuelLevel} check has passed!`;
             cargoStatus.innerHTML = `Cargo Mass: ${cargoMass} check has passed!`;
-         }
-         
-           
+         }           
 
    });
-
-
-
-
+   
 });
 
 /* This block of code shows how to format the HTML once you fetch some planetary JSON!
